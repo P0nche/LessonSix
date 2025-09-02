@@ -35,18 +35,14 @@ public class Main {
             switch (scanner.next()) {
                 case "1" -> {
                     dispenser.checkMoney();
-                    continue;
                 }
 
                 case "2" -> {
-
                     dispenser.addMoney();
-                    continue;
                 }
 
                 case "3" -> {
                     dispenser.lostMoney();
-                    continue;
                 }
 
                 case "4" -> {
@@ -55,7 +51,6 @@ public class Main {
                 }
 
                 default -> {
-                    continue;
                 }
             }
         }
