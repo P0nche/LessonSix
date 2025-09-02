@@ -1,5 +1,7 @@
 package TaskTwo;
 
+import static TaskTwo.Main.scanner;
+
 public class CashDispenser {
     private final String regNumber;
     private int countOfTwenty;
@@ -20,17 +22,33 @@ public class CashDispenser {
         this.countOfOneHundred = countOfOneHundred;
     }
 
-    public void addMoney(int amountOfTwenty, int amountOfFifty, int amountOfOneHundred) {
+    public void addMoney() {
+        System.out.print("Введите количество купюр по 20: ");
+        int amountOfTwenty = scanner.nextInt();
+        System.out.print("Введите количество купюр по 50: ");
+        int amountOfFifty = scanner.nextInt();
+        System.out.print("Введите количество купюр по 100: ");
+        int amountOfOneHundred = scanner.nextInt();
+        System.out.println("Вы положили на счёт: " + (amountOfTwenty + amountOfFifty + amountOfOneHundred));
+
         countOfTwenty += amountOfTwenty;
         countOfFifty += amountOfFifty;
         countOfOneHundred += amountOfOneHundred;
     }
 
-    public boolean lostMoney(int amount) {
+    public boolean lostMoney() {
+        System.out.print("Введите сумму для снятия: ");
+        int amount = scanner.nextInt();
+
         int sum = 20 * countOfTwenty + 50 * countOfFifty + 100 * countOfOneHundred;
-        int newCountOfTwenty = 0;
-        int newCountOfFifty = 0;
-        int newCountOfOneHundred = 0;
+        int difCountOfTwenty = 0;
+        int difCountOfFifty = 0;
+        int difCountOfOneHundred = 0;
+
+        if(sum == 0) {
+            System.out.println("Денег в банкомате нет(");
+            return false;
+        }
 
         if (amount <= sum && amount > 0) {
             int difference = sum - amount;
@@ -41,28 +59,31 @@ public class CashDispenser {
             }
 
             while (difference > 0) {
-                if (difference % 50 != 0 && newCountOfTwenty <= countOfTwenty) {
+                if (difference % 50 != 0 && difCountOfTwenty <= countOfTwenty) {
                     difference -= 20;
-                    newCountOfTwenty++;
-                } else if (difference % 100 != 0 && newCountOfFifty <= countOfFifty) {
+                    difCountOfTwenty++;
+                } else if (difference % 100 != 0 && difCountOfFifty <= countOfFifty) {
                     difference -= 50;
-                    newCountOfFifty++;
+                    difCountOfFifty++;
                 } else {
                     difference -= 100;
-                    newCountOfOneHundred++;
+                    difCountOfOneHundred++;
                 }
-
-
-                System.out.println("100: " + (countOfOneHundred - newCountOfOneHundred));
-                System.out.println("50: " + (countOfFifty - newCountOfFifty));
-                System.out.println("20: " + (countOfTwenty - newCountOfTwenty));
-
-                countOfOneHundred -= (countOfOneHundred - newCountOfOneHundred);
-                countOfFifty -= (countOfFifty - newCountOfFifty);
-                countOfTwenty -= (countOfTwenty - newCountOfTwenty);
-
-                return true;
             }
+
+            int lostCountOfTwenty = countOfOneHundred - difCountOfOneHundred;
+            int lostCountOfFifty = countOfFifty - difCountOfFifty;
+            int lostCountOfOneHundred = countOfTwenty - difCountOfTwenty;
+
+            System.out.println("100: " + lostCountOfTwenty);
+            System.out.println("50: " + lostCountOfFifty);
+            System.out.println("20: " + lostCountOfOneHundred);
+
+            countOfOneHundred -= lostCountOfOneHundred;
+            countOfFifty -= lostCountOfFifty;
+            countOfTwenty -= lostCountOfTwenty;
+
+            return true;
 
         }
         System.out.println("Операция не прошла!");
@@ -76,5 +97,9 @@ public class CashDispenser {
         System.out.println("50: " + countOfFifty);
         System.out.println("20: " + countOfTwenty);
         System.out.println("Итого: " + sum);
+    }
+
+    public String getRegNumber() {
+        return regNumber;
     }
 }
