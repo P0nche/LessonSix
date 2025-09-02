@@ -45,7 +45,7 @@ public class CashDispenser {
         int difCountOfFifty = 0;
         int difCountOfOneHundred = 0;
 
-        if(sum == 0) {
+        if (sum == 0) {
             System.out.println("Денег в банкомате нет(");
             return false;
         }
@@ -59,25 +59,25 @@ public class CashDispenser {
             }
 
             while (difference > 0) {
-                if (difference % 50 != 0 && difCountOfTwenty <= countOfTwenty) {
+                if (difference % 50 != 0 && difCountOfTwenty <= countOfTwenty && countOfTwenty > 0) {
                     difference -= 20;
                     difCountOfTwenty++;
-                } else if (difference % 100 != 0 && difCountOfFifty <= countOfFifty) {
+                } else if (difference % 100 != 0 && difCountOfFifty <= countOfFifty && countOfFifty > 0) {
                     difference -= 50;
                     difCountOfFifty++;
-                } else {
+                } else if (countOfOneHundred > 0) {
                     difference -= 100;
                     difCountOfOneHundred++;
                 }
             }
 
-            int lostCountOfTwenty = countOfOneHundred - difCountOfOneHundred;
+            int lostCountOfOneHundred = countOfOneHundred - difCountOfOneHundred;
             int lostCountOfFifty = countOfFifty - difCountOfFifty;
-            int lostCountOfOneHundred = countOfTwenty - difCountOfTwenty;
+            int lostCountOfTwenty = countOfTwenty - difCountOfTwenty;
 
-            System.out.println("100: " + lostCountOfTwenty);
+            System.out.println("100: " + lostCountOfOneHundred);
             System.out.println("50: " + lostCountOfFifty);
-            System.out.println("20: " + lostCountOfOneHundred);
+            System.out.println("20: " + lostCountOfTwenty);
 
             countOfOneHundred -= lostCountOfOneHundred;
             countOfFifty -= lostCountOfFifty;
