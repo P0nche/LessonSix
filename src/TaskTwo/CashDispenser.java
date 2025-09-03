@@ -58,30 +58,32 @@ public class CashDispenser {
                 return false;
             }
 
-            while (difference > 0) {
-                if (difference % 50 != 0 && difCountOfTwenty <= countOfTwenty && countOfTwenty > 0) {
-                    difference -= 20;
-                    difCountOfTwenty++;
-                } else if (difference % 100 != 0 && difCountOfFifty <= countOfFifty && countOfFifty > 0) {
-                    difference -= 50;
-                    difCountOfFifty++;
-                } else if (countOfOneHundred > 0) {
-                    difference -= 100;
+            while (amount > 0) {
+                if (amount % 100 == 0 && countOfOneHundred > 0) {
+                    amount -= 100;
                     difCountOfOneHundred++;
+                    countOfOneHundred--;
+                } else if (amount % 50 == 0 && countOfFifty > 0) {
+                    amount -= 50;
+                    difCountOfFifty++;
+                    countOfFifty--;
+                } else if (countOfTwenty > 0) {
+                    amount -= 20;
+                    difCountOfTwenty++;
+                    countOfTwenty--;
+                } else {
+                    System.out.println("Нам не хватает купюр, чтобы выдать эту сумму...");
+                    countOfTwenty += difCountOfTwenty;
+                    countOfFifty += difCountOfFifty;
+                    countOfOneHundred += difCountOfOneHundred;
+                    return false;
                 }
             }
 
-            int lostCountOfOneHundred = countOfOneHundred - difCountOfOneHundred;
-            int lostCountOfFifty = countOfFifty - difCountOfFifty;
-            int lostCountOfTwenty = countOfTwenty - difCountOfTwenty;
-
-            System.out.println("100: " + lostCountOfOneHundred);
-            System.out.println("50: " + lostCountOfFifty);
-            System.out.println("20: " + lostCountOfTwenty);
-
-            countOfOneHundred -= lostCountOfOneHundred;
-            countOfFifty -= lostCountOfFifty;
-            countOfTwenty -= lostCountOfTwenty;
+            System.out.println("Выданы наличные в количестве:");
+            System.out.println("100: " + difCountOfOneHundred);
+            System.out.println("50: " + difCountOfFifty);
+            System.out.println("20: " + difCountOfTwenty);
 
             return true;
 
