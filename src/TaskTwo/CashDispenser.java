@@ -29,7 +29,7 @@ public class CashDispenser {
         int amountOfFifty = scanner.nextInt();
         System.out.print("Введите количество купюр по 100: ");
         int amountOfOneHundred = scanner.nextInt();
-        System.out.println("Вы положили на счёт: " + (amountOfTwenty + amountOfFifty + amountOfOneHundred));
+        System.out.println("Вы положили на счёт: " + (amountOfTwenty * 20 + amountOfFifty * 50 + amountOfOneHundred * 100));
 
         countOfTwenty += amountOfTwenty;
         countOfFifty += amountOfFifty;
